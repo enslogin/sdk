@@ -65,6 +65,8 @@ export default class ENSLogin
 			var loader = null;
 			switch (protocol)
 			{
+				case 'http':  loader = loaders.fromHTTP;  break;
+				case 'https': loader = loaders.fromHTTP;  break;
 				case 'ipfs':  loader = loaders.fromIPFS;  break;
 				case 'swarm': loader = loaders.fromSwarm; break;
 				// case 'file':  loader = loaders.fromFS;    break;
@@ -72,8 +74,7 @@ export default class ENSLogin
 					reject(`protocole ${protocol} is not supported`);
 					return;
 			}
-			console.log(loader);
-			loader(uri, config)
+			loader(protocol, uri, config)
 			.then(async () => resolve(await eval(entrypoint)(config)))
 			.catch(reject);
 		});

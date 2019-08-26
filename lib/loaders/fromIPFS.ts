@@ -27,7 +27,7 @@ function __loadFromNode(node: types.ipfsApi, fileHash: string, config: types.con
 	});
 }
 
-export function fromIPFS(fileHash: string, config: types.config = {})
+export function fromIPFS(protocol: string, fileHash: string, config: types.config = {})
 {
 	if (config.__callbacks && config.__callbacks.loading)
 	{
@@ -40,7 +40,7 @@ export function fromIPFS(fileHash: string, config: types.config = {})
 	);
 }
 
-// export function fromIPFS(fileHash: string, config: types.config = {})
+// export function fromIPFS(protocol: string, fileHash: string, config: types.config = {})
 // {
 // 	return new Promise((resolve, reject) => {
 // 		const node = new IPFS();

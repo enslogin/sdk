@@ -23,7 +23,7 @@ function __loadFromNode(node, fileHash, config) {
             .catch(reject);
     });
 }
-function fromIPFS(fileHash, config) {
+function fromIPFS(protocol, fileHash, config) {
     if (config === void 0) { config = {}; }
     if (config.__callbacks && config.__callbacks.loading) {
         config.__callbacks.loading(fileHash);
@@ -31,7 +31,7 @@ function fromIPFS(fileHash, config) {
     return __loadFromNode(ipfs_http_client_1.default(config.ipfs || { host: 'ipfs.infura.io', port: 5001, protocol: 'https' }), fileHash, config);
 }
 exports.fromIPFS = fromIPFS;
-// export function fromIPFS(fileHash: string, config: types.config = {})
+// export function fromIPFS(protocol: string, fileHash: string, config: types.config = {})
 // {
 // 	return new Promise((resolve, reject) => {
 // 		const node = new IPFS();
