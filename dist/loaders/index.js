@@ -1,4 +1,8 @@
 "use strict";
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
-var fromIPFS_1 = require("./fromIPFS");
-exports.fromIPFS = fromIPFS_1.fromIPFS;
+__export(require("./fromIPFS"));
+__export(require("./fromSwarm"));
+// export * from './fromFS';

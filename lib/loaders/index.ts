@@ -1,7 +1,3 @@
-import { fromIPFS } from './fromIPFS';
-// import { fromFS   } from './fromFS';
-
-export {
-	fromIPFS,
-	// fromFS,
-};
+export * from './fromIPFS';
+export * from './fromSwarm';
+// export * from './fromFS';

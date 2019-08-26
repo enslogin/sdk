@@ -1,5 +1,3 @@
-import * as ethereum from './ethereum';
-import { config }    from './config';
-import { ipfsApi }   from './ipfs';
-
-export { ethereum, config, ipfsApi };
+export * from './ethereum';
+export * from './config';
+export * from './ipfs';

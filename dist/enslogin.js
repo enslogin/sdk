@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -48,9 +59,8 @@ var ensutils = __importStar(require("./utils/ensutils"));
 var ENSLogin = /** @class */ (function () {
     function ENSLogin() {
     }
-    ENSLogin.resolveUsername = function (username, config) {
+    ENSLogin._resolveUsername = function (username, config) {
         var _this = this;
-        if (config === void 0) { config = {}; }
         return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
             var basicProvider, ens, addr, node, resolver, descr, node, resolver, descr, e_1;
             return __generator(this, function (_a) {
@@ -105,43 +115,51 @@ var ENSLogin = /** @class */ (function () {
             });
         }); });
     };
-    ENSLogin.connect = function (username, config) {
+    ENSLogin._loadProvider = function (descr, config) {
         var _this = this;
-        if (config === void 0) { config = {}; }
         return new Promise(function (resolve, reject) {
-            ENSLogin.resolveUsername(username, config)
+            var parsed = descr.match('([a-zA-Z0-9_]*)://([^:]*)(:(.*))?');
+            var protocol = parsed[1];
+            var uri = parsed[2];
+            var entrypoint = parsed[4] || 'provider';
+            console.log(protocol, uri, entrypoint);
+            var loader = null;
+            switch (protocol) {
+                case 'ipfs':
+                    loader = loaders.fromIPFS;
+                    break;
+                case 'swarm':
+                    loader = loaders.fromSwarm;
+                    break;
+                // case 'file':  loader = loaders.fromFS;    break;
+                default:
+                    reject("protocole " + protocol + " is not supported");
+                    return;
+            }
+            console.log(loader);
+            loader(uri, config)
+                .then(function () { return __awaiter(_this, void 0, void 0, function () { var _a; return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = resolve;
+                        return [4 /*yield*/, eval(entrypoint)(config)];
+                    case 1: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
+                }
+            }); }); })
+                .catch(reject);
+        });
+    };
+    ENSLogin.connect = function (username, config) {
+        return new Promise(function (resolve, reject) {
+            ENSLogin._resolveUsername(username, config)
                 .then(function (_a) {
                 var addr = _a.addr, descr = _a.descr;
-                config.user = { username: username, addr: addr, descr: descr };
                 if (config.__callbacks && config.__callbacks.resolved) {
                     config.__callbacks.resolved();
                 }
-                var parsed = descr.match('([a-zA-Z0-9_]*)://([^:]*)(:(.*))?');
-                var protocol = parsed[1];
-                var uri = parsed[2];
-                var entrypoint = parsed[4] || 'provider';
-                console.log(protocol, uri, entrypoint);
-                switch (protocol) {
-                    case 'ipfs':
-                        loaders.fromIPFS(uri, config)
-                            .then(function () { return __awaiter(_this, void 0, void 0, function () { var _a; return __generator(this, function (_b) {
-                            switch (_b.label) {
-                                case 0:
-                                    _a = resolve;
-                                    return [4 /*yield*/, eval(entrypoint)(config)];
-                                case 1: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
-                            }
-                        }); }); })
-                            .catch(reject);
-                        break;
-                    // case 'file':
-                    // 	loaders.fromFS(uri, config)
-                    // 	.then(async () => resolve(await eval(entrypoint)(config)))
-                    // 	.catch(reject);
-                    // 	break;
-                    default:
-                        reject("protocole " + protocol + " is not supported");
-                }
+                ENSLogin._loadProvider(descr, __assign({}, config, { user: { username: username, addr: addr, descr: descr } }))
+                    .then(resolve)
+                    .catch(reject);
             })
                 .catch(reject);
         });
