@@ -3,25 +3,25 @@ import vm    from 'vm';
 
 import * as types from '../types';
 
-export function fromSwarm(protocol: string, fileHash: string, config: types.config = {})
+export function fromSwarm(protocol: string, path: string, config: types.config = {})
 {
-	if (config.__callbacks && config.__callbacks.loading)
-	{
-		config.__callbacks.loading(fileHash);
-	}
 	return new Promise((resolve, reject) => {
+		if (config.__callbacks && config.__callbacks.loading)
+		{
+			config.__callbacks.loading(protocol, path);
+		}
 		swarm
 		.at(config.swarm || "http://swarm-gateways.net")
-		.download(fileHash)
+		.download(path)
 		.then(data => {
 			// TODO handle dirs
 			if (config.__callbacks && config.__callbacks.loaded)
 			{
-				config.__callbacks.loaded({ uri: `${protocole}://${path}` });
+				config.__callbacks.loaded(protocol, path);
 			}
 			vm.runInThisContext(
 				swarm.toString(data),
-				{ filename: fileHash }
+				{ filename: path }
 			);
 			resolve();
 		})

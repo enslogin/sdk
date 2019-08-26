@@ -11,10 +11,10 @@ var getters = {
     'https': https_1.default
 };
 function fromHTTP(protocol, path, config) {
-    if (config.__callbacks && config.__callbacks.loading) {
-        config.__callbacks.loading(path);
-    }
     return new Promise(function (resolve, reject) {
+        if (config.__callbacks && config.__callbacks.loading) {
+            config.__callbacks.loading(protocol, path);
+        }
         getters[protocol].get(protocol + "://" + path, function (res) {
             var statusCode = res.statusCode;
             var contentType = res.headers['content-type'];
@@ -31,7 +31,7 @@ function fromHTTP(protocol, path, config) {
             res.on('data', function (chunk) { return chunks.push(chunk); });
             res.on('end', function () {
                 if (config.__callbacks && config.__callbacks.loaded) {
-                    config.__callbacks.loaded(path);
+                    config.__callbacks.loaded(protocol, path);
                 }
                 vm_1.default.runInThisContext(chunks.join(""), { filename: path });
                 resolve();

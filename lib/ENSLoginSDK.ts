@@ -21,7 +21,6 @@ export default class ENSLoginSDK
 					{
 						addr  = await resolver.addr(node);
 						const descr = await resolver.text(node, 'web3-provider');
-						console.log('Provider URL at web3-provider: ', descr)
 						if (descr)
 						{
 							resolve({ addr, descr });
@@ -35,7 +34,6 @@ export default class ENSLoginSDK
 					if (resolver)
 					{
 						const descr = await resolver.text(node, 'web3-provider-default');
-						console.log('Provider URL at web3-provider-default: ', descr)
 						if (descr)
 						{
 							resolve({ addr, descr });
@@ -59,8 +57,6 @@ export default class ENSLoginSDK
 			const entrypoint = parsed[2] || 'provider';
 			const protocol   = parsed[3];
 			const uri        = parsed[4];
-
-			console.log(protocol, uri, entrypoint)
 
 			var loader = null;
 			switch (protocol)
@@ -87,7 +83,7 @@ export default class ENSLoginSDK
 			.then(({ addr, descr }) => {
 				if (config.__callbacks && config.__callbacks.resolved)
 				{
-					config.__callbacks.resolved({ username, addr, descr });
+					config.__callbacks.resolved(username, addr, descr);
 				}
 				ENSLoginSDK._loadProvider(descr, { ...config, user: { username, addr, descr }})
 				.then(resolve)

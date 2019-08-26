@@ -82,7 +82,6 @@ var ENSLoginSDK = /** @class */ (function () {
                         return [4 /*yield*/, resolver.text(node, 'web3-provider')];
                     case 4:
                         descr = _a.sent();
-                        console.log('Provider URL at web3-provider: ', descr);
                         if (descr) {
                             resolve({ addr: addr, descr: descr });
                             return [2 /*return*/];
@@ -97,7 +96,6 @@ var ENSLoginSDK = /** @class */ (function () {
                         return [4 /*yield*/, resolver.text(node, 'web3-provider-default')];
                     case 7:
                         descr = _a.sent();
-                        console.log('Provider URL at web3-provider-default: ', descr);
                         if (descr) {
                             resolve({ addr: addr, descr: descr });
                             return [2 /*return*/];
@@ -122,7 +120,6 @@ var ENSLoginSDK = /** @class */ (function () {
             var entrypoint = parsed[2] || 'provider';
             var protocol = parsed[3];
             var uri = parsed[4];
-            console.log(protocol, uri, entrypoint);
             var loader = null;
             switch (protocol) {
                 case 'http':
@@ -160,7 +157,7 @@ var ENSLoginSDK = /** @class */ (function () {
                 .then(function (_a) {
                 var addr = _a.addr, descr = _a.descr;
                 if (config.__callbacks && config.__callbacks.resolved) {
-                    config.__callbacks.resolved();
+                    config.__callbacks.resolved(username, addr, descr);
                 }
                 ENSLoginSDK._loadProvider(descr, __assign({}, config, { user: { username: username, addr: addr, descr: descr } }))
                     .then(resolve)

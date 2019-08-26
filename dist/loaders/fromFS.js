@@ -6,14 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var vm_1 = __importDefault(require("vm"));
 function fromFS(protocol, path, config) {
-    if (config.__callbacks && config.__callbacks.loading) {
-        config.__callbacks.loading(path);
-    }
     return new Promise(function (resolve, reject) {
+        if (config.__callbacks && config.__callbacks.loading) {
+            config.__callbacks.loading(protocol, path);
+        }
         var stats = fs_1.default.lstatSync(path);
         if (stats.isFile()) {
             if (config.__callbacks && config.__callbacks.loaded) {
-                config.__callbacks.loaded(path);
+                config.__callbacks.loaded(protocol, path);
             }
             vm_1.default.runInThisContext(fs_1.default.readFileSync(path).toString(), { filename: path });
             resolve();

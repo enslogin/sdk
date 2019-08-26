@@ -5,17 +5,17 @@ import * as types from '../types';
 
 export function fromFS(protocol: string, path: string, config: types.config)
 {
-	if (config.__callbacks && config.__callbacks.loading)
-	{
-		config.__callbacks.loading({ uri: `${protocole}://${path}` });
-	}
 	return new Promise((resolve, reject) => {
+		if (config.__callbacks && config.__callbacks.loading)
+		{
+			config.__callbacks.loading(protocol, path);
+		}
 		const stats = fs.lstatSync(path);
 		if (stats.isFile())
 		{
 			if (config.__callbacks && config.__callbacks.loaded)
 			{
-				config.__callbacks.loaded({ uri: `${protocole}://${path}` });
+				config.__callbacks.loaded(protocol, path);
 			}
 			vm.runInThisContext(fs.readFileSync(path).toString(), { filename: path });
 			resolve();
