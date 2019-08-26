@@ -4,7 +4,7 @@ import * as ensutils from "./utils/ensutils";
 
 import * as types from './types';
 
-export default class ENSLogin
+export default class ENSLoginSDK
 {
 	static _resolveUsername(username: string, config: types.config)
 	{
@@ -61,7 +61,7 @@ export default class ENSLogin
 			const uri        = parsed[4];
 
 			console.log(protocol, uri, entrypoint)
-
+			
 			var loader = null;
 			switch (protocol)
 			{
@@ -83,13 +83,13 @@ export default class ENSLogin
 	static connect(username: string, config: types.config)
 	{
 		return new Promise((resolve, reject) => {
-			ENSLogin._resolveUsername(username, config)
+			ENSLoginSDK._resolveUsername(username, config)
 			.then(({ addr, descr }) => {
 				if (config.__callbacks && config.__callbacks.resolved)
 				{
 					config.__callbacks.resolved();
 				}
-				ENSLogin._loadProvider(descr, { ...config, user: { username, addr, descr }})
+				ENSLoginSDK._loadProvider(descr, { ...config, user: { username, addr, descr }})
 				.then(resolve)
 				.catch(reject);
 			})

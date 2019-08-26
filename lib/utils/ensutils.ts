@@ -26,7 +26,8 @@ function getENS(basicProvider: types.provider, config: types.config): Promise<ty
 {
 	return new Promise(async (resolve, reject) => {
 		basicProvider.getNetwork().then(chain => {
-			resolve(new ethers.Contract(config.provider.ens.toString() || chain.ensAddress, ENS.abi, basicProvider));
+			const registry = config.provider.ens || chain.ensAddress;
+			resolve(new ethers.Contract(registry.toString(), ENS.abi, basicProvider));
 		})
 		.catch(reject);
 	});

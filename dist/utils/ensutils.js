@@ -58,7 +58,8 @@ function getENS(basicProvider, config) {
     return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             basicProvider.getNetwork().then(function (chain) {
-                resolve(new ethers_1.ethers.Contract(config.provider.ens.toString() || chain.ensAddress, ENS_json_1.default.abi, basicProvider));
+                var registry = config.provider.ens || chain.ensAddress;
+                resolve(new ethers_1.ethers.Contract(registry.toString(), ENS_json_1.default.abi, basicProvider));
             })
                 .catch(reject);
             return [2 /*return*/];

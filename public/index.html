@@ -10,7 +10,7 @@
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 
 		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
-		<script src="enslogin-bundle.js"></script>
+		<script src="ENSLoginSDK.js"></script>
 		<script>
 
 			const config = {
@@ -28,7 +28,7 @@
 				},
 			}
 
-			const test = (username) => enslogin.default.connect(username, config);
+			const test = (username) => ENSLoginSDK.default.connect(username, config);
 
 		</script>
 	</body>

@@ -56,10 +56,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ethers_1 = require("ethers");
 var loaders = __importStar(require("./loaders"));
 var ensutils = __importStar(require("./utils/ensutils"));
-var ENSLogin = /** @class */ (function () {
-    function ENSLogin() {
+var ENSLoginSDK = /** @class */ (function () {
+    function ENSLoginSDK() {
     }
-    ENSLogin._resolveUsername = function (username, config) {
+    ENSLoginSDK._resolveUsername = function (username, config) {
         var _this = this;
         return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
             var basicProvider, ens, addr, node, resolver, descr, node, resolver, descr, e_1;
@@ -115,7 +115,7 @@ var ENSLogin = /** @class */ (function () {
             });
         }); });
     };
-    ENSLogin._loadProvider = function (descr, config) {
+    ENSLoginSDK._loadProvider = function (descr, config) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             var parsed = descr.match('(([a-zA-Z0-9_]*)@)?([a-zA-Z0-9_]*)://(.*)');
@@ -154,21 +154,21 @@ var ENSLogin = /** @class */ (function () {
                 .catch(reject);
         });
     };
-    ENSLogin.connect = function (username, config) {
+    ENSLoginSDK.connect = function (username, config) {
         return new Promise(function (resolve, reject) {
-            ENSLogin._resolveUsername(username, config)
+            ENSLoginSDK._resolveUsername(username, config)
                 .then(function (_a) {
                 var addr = _a.addr, descr = _a.descr;
                 if (config.__callbacks && config.__callbacks.resolved) {
                     config.__callbacks.resolved();
                 }
-                ENSLogin._loadProvider(descr, __assign({}, config, { user: { username: username, addr: addr, descr: descr } }))
+                ENSLoginSDK._loadProvider(descr, __assign({}, config, { user: { username: username, addr: addr, descr: descr } }))
                     .then(resolve)
                     .catch(reject);
             })
                 .catch(reject);
         });
     };
-    return ENSLogin;
+    return ENSLoginSDK;
 }());
-exports.default = ENSLogin;
+exports.default = ENSLoginSDK;

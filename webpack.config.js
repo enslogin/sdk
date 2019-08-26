@@ -2,12 +2,12 @@ const path = require('path');
 
 module.exports = {
 	mode:  "production",
-	entry: "./dist/enslogin.js",
+	entry: "./dist/ENSLoginSDK.js",
 	output:
 	{
 		path:          path.resolve(__dirname, "public"),
-		filename:      "enslogin-bundle.js",
-		library:       "enslogin",
+		filename:      "ENSLoginSDK.js",
+		library:       "ENSLoginSDK",
 		libraryTarget: "umd",
 	},
 	module: {
