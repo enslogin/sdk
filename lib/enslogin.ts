@@ -12,11 +12,11 @@ export default class ENSLogin
 			try
 			{
 				const basicProvider = ethers.getDefaultProvider(config.provider.network);
-				const ens           = await ensutils.getENS(basicProvider);
+				const ens           = await ensutils.getENS(basicProvider, config);
 				var addr;
 				{
 					const node     = ensutils.namehash(username);
-					const resolver = await ensutils.getResolver(ens, node);
+					const resolver = await ensutils.getResolver(ens, node, config);
 					if (resolver)
 					{
 						addr  = await resolver.addr(node);
@@ -31,7 +31,7 @@ export default class ENSLogin
 				}
 				{
 					const node     = ensutils.namehash(username.split('.').splice(1).join('.'));
-					const resolver = await ensutils.getResolver(ens, node);
+					const resolver = await ensutils.getResolver(ens, node, config);
 					if (resolver)
 					{
 						const descr = await resolver.text(node, 'web3-provider-default');

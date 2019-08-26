@@ -58,11 +58,11 @@ var ENSLogin = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 9, , 10]);
                         basicProvider = ethers_1.ethers.getDefaultProvider(config.provider.network);
-                        return [4 /*yield*/, ensutils.getENS(basicProvider)];
+                        return [4 /*yield*/, ensutils.getENS(basicProvider, config)];
                     case 1:
                         ens = _a.sent();
                         node = ensutils.namehash(username);
-                        return [4 /*yield*/, ensutils.getResolver(ens, node)];
+                        return [4 /*yield*/, ensutils.getResolver(ens, node, config)];
                     case 2:
                         resolver = _a.sent();
                         if (!resolver) return [3 /*break*/, 5];
@@ -80,7 +80,7 @@ var ENSLogin = /** @class */ (function () {
                         _a.label = 5;
                     case 5:
                         node = ensutils.namehash(username.split('.').splice(1).join('.'));
-                        return [4 /*yield*/, ensutils.getResolver(ens, node)];
+                        return [4 /*yield*/, ensutils.getResolver(ens, node, config)];
                     case 6:
                         resolver = _a.sent();
                         if (!resolver) return [3 /*break*/, 8];

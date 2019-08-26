@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var vm_1 = __importDefault(require("vm"));
 function fromFS(path, config) {
-    if (config === void 0) { config = {}; }
     if (config.__callbacks && config.__callbacks.loading) {
         config.__callbacks.loading(path);
     }
@@ -20,7 +19,7 @@ function fromFS(path, config) {
             resolve();
         }
         else if (stats.isDirectory()) {
-            Promise.all(fs_1.default.readdirSync(path).map(function (file) { return fromFS(path + "/" + file); }))
+            Promise.all(fs_1.default.readdirSync(path).map(function (file) { return fromFS(path + "/" + file, config); }))
                 .then(function () { resolve(); })
                 .catch(reject);
         }

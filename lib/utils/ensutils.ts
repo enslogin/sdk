@@ -22,17 +22,17 @@ function namehash(domain: string): types.ethereum.bytes32
 	);
 }
 
-function getENS(basicProvider: types.ethereum.provider): Promise<types.ethereum.contract>
+function getENS(basicProvider: types.ethereum.provider, config: types.config): Promise<types.ethereum.contract>
 {
 	return new Promise(async (resolve, reject) => {
 		basicProvider.getNetwork().then(chain => {
-			resolve(new ethers.Contract(chain.ensAddress, ENS.abi, basicProvider));
+			resolve(new ethers.Contract(config.provider.ens.toString() || chain.ensAddress, ENS.abi, basicProvider));
 		})
 		.catch(reject);
 	});
 }
 
-function getResolver(ens: types.ethereum.contract, node: types.ethereum.bytes32): Promise<types.ethereum.contract>
+function getResolver(ens: types.ethereum.contract, node: types.ethereum.bytes32, config: types.config): Promise<types.ethereum.contract>
 {
 	return new Promise(async (resolve, reject) => {
 		ens.resolver(node).then(addr => {

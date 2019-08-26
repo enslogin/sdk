@@ -4,7 +4,7 @@ import vm       from 'vm';
 
 import * as types from '../types';
 
-function __loadFromNode(node: types.ipfsApi, fileHash: string, config: types.config = {})
+function __loadFromNode(node: types.ipfsApi, fileHash: string, config: types.config)
 {
 	return new Promise((resolve, reject) => {
 		node.get(fileHash)
@@ -36,6 +36,7 @@ export function fromIPFS(fileHash: string, config: types.config = {})
 	return __loadFromNode(
 		IPFSHTTP(config.ipfs || { host: 'ipfs.infura.io', port: 5001, protocol: 'https' }),
 		fileHash,
+		config
 	);
 }
 
@@ -46,7 +47,7 @@ export function fromIPFS(fileHash: string, config: types.config = {})
 // 		node.once('ready', () => {
 // 			console.log('node started');
 // 			if (config.__callbacks && config.__callbacks.loading) { config.__callbacks.loading(fileHash); }
-// 			__loadFromNode(node, fileHash)
+// 			__loadFromNode(node, fileHash, config)
 // 			.then(() =>{ node.stop(resolve); })
 // 			.catch(reject);
 // 		});

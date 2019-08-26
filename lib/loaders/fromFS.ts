@@ -3,7 +3,7 @@ import vm from 'vm';
 
 import * as types from '../types';
 
-export function fromFS(path: string, config: types.config = {})
+export function fromFS(path: string, config: types.config)
 {
 	if (config.__callbacks && config.__callbacks.loading)
 	{
@@ -22,7 +22,7 @@ export function fromFS(path: string, config: types.config = {})
 		}
 		else if (stats.isDirectory())
 		{
-			Promise.all(fs.readdirSync(path).map(file => fromFS(`${path}/${file}`)))
+			Promise.all(fs.readdirSync(path).map(file => fromFS(`${path}/${file}`, config)))
 			.then(() => { resolve() })
 			.catch(reject);
 		}

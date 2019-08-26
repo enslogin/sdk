@@ -53,12 +53,12 @@ function namehash(domain) {
     return domain.split('.').reverse().reduce(function (hash, label) { return compose(labelhash(label), hash); }, "0x0000000000000000000000000000000000000000000000000000000000000000");
 }
 exports.namehash = namehash;
-function getENS(basicProvider) {
+function getENS(basicProvider, config) {
     var _this = this;
     return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             basicProvider.getNetwork().then(function (chain) {
-                resolve(new ethers_1.ethers.Contract(chain.ensAddress, ENS_json_1.default.abi, basicProvider));
+                resolve(new ethers_1.ethers.Contract(config.provider.ens.toString() || chain.ensAddress, ENS_json_1.default.abi, basicProvider));
             })
                 .catch(reject);
             return [2 /*return*/];
@@ -66,7 +66,7 @@ function getENS(basicProvider) {
     }); });
 }
 exports.getENS = getENS;
-function getResolver(ens, node) {
+function getResolver(ens, node, config) {
     var _this = this;
     return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {

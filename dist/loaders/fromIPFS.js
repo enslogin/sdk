@@ -7,7 +7,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ipfs_http_client_1 = __importDefault(require("ipfs-http-client"));
 var vm_1 = __importDefault(require("vm"));
 function __loadFromNode(node, fileHash, config) {
-    if (config === void 0) { config = {}; }
     return new Promise(function (resolve, reject) {
         node.get(fileHash)
             .then(function (files) {
@@ -29,7 +28,7 @@ function fromIPFS(fileHash, config) {
     if (config.__callbacks && config.__callbacks.loading) {
         config.__callbacks.loading(fileHash);
     }
-    return __loadFromNode(ipfs_http_client_1.default(config.ipfs || { host: 'ipfs.infura.io', port: 5001, protocol: 'https' }), fileHash);
+    return __loadFromNode(ipfs_http_client_1.default(config.ipfs || { host: 'ipfs.infura.io', port: 5001, protocol: 'https' }), fileHash, config);
 }
 exports.fromIPFS = fromIPFS;
 // export function fromIPFS(fileHash: string, config: types.config = {})
@@ -39,7 +38,7 @@ exports.fromIPFS = fromIPFS;
 // 		node.once('ready', () => {
 // 			console.log('node started');
 // 			if (config.__callbacks && config.__callbacks.loading) { config.__callbacks.loading(fileHash); }
-// 			__loadFromNode(node, fileHash)
+// 			__loadFromNode(node, fileHash, config)
 // 			.then(() =>{ node.stop(resolve); })
 // 			.catch(reject);
 // 		});
