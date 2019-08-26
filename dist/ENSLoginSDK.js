@@ -144,7 +144,7 @@ var ENSLoginSDK = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = resolve;
-                        return [4 /*yield*/, eval(entrypoint)(config)];
+                        return [4 /*yield*/, window[entrypoint](config)];
                     case 1: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
                 }
             }); }); })

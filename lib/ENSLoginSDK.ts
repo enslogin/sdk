@@ -71,7 +71,7 @@ export default class ENSLoginSDK
 					return;
 			}
 			loader(protocol, uri, config)
-			.then(async () => resolve(await eval(entrypoint)(config)))
+			.then(async () => resolve(await window[entrypoint](config)))
 			.catch(reject);
 		});
 	}
