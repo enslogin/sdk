@@ -6,6 +6,10 @@ import * as types from '../types';
 
 function __loadFromNode(node: types.ipfsApi, fileHash: string, config: types.config)
 {
+	if (config.__callbacks && config.__callbacks.loading)
+	{
+		config.__callbacks.loading({ uri: `${protocole}://${path}` });
+	}
 	return new Promise((resolve, reject) => {
 		node.get(fileHash)
 		.then(files => {
@@ -14,7 +18,7 @@ function __loadFromNode(node: types.ipfsApi, fileHash: string, config: types.con
 			.forEach(file => {
 				if (config.__callbacks && config.__callbacks.loaded)
 				{
-					config.__callbacks.loaded(file.name);
+					config.__callbacks.loaded({ uri: `${protocole}://${path}` });
 				}
 				vm.runInThisContext(
 					file.content.toString(),
@@ -29,10 +33,6 @@ function __loadFromNode(node: types.ipfsApi, fileHash: string, config: types.con
 
 export function fromIPFS(protocol: string, fileHash: string, config: types.config = {})
 {
-	if (config.__callbacks && config.__callbacks.loading)
-	{
-		config.__callbacks.loading(fileHash);
-	}
 	return __loadFromNode(
 		IPFSHTTP(config.ipfs || { host: 'ipfs.infura.io', port: 5001, protocol: 'https' }),
 		fileHash,
@@ -46,7 +46,6 @@ export function fromIPFS(protocol: string, fileHash: string, config: types.confi
 // 		const node = new IPFS();
 // 		node.once('ready', () => {
 // 			console.log('node started');
-// 			if (config.__callbacks && config.__callbacks.loading) { config.__callbacks.loading(fileHash); }
 // 			__loadFromNode(node, fileHash, config)
 // 			.then(() =>{ node.stop(resolve); })
 // 			.catch(reject);

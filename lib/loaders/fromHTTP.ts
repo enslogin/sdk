@@ -13,7 +13,7 @@ export function fromHTTP(protocol: string, path: string, config: types.config)
 {
 	if (config.__callbacks && config.__callbacks.loading)
 	{
-		config.__callbacks.loading(path);
+		config.__callbacks.loading({ uri: `${protocole}://${path}` });
 	}
 	return new Promise((resolve, reject) => {
 		getters[protocol].get(`${protocol}://${path}`, (res) => {
@@ -35,7 +35,7 @@ export function fromHTTP(protocol: string, path: string, config: types.config)
 			res.on('end', () => {
 				if (config.__callbacks && config.__callbacks.loaded)
 				{
-					config.__callbacks.loaded(path);
+					config.__callbacks.loaded({ uri: `${protocole}://${path}` });
 				}
 				vm.runInThisContext(chunks.join(""), { filename: path });
 				resolve();

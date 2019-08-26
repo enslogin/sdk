@@ -61,7 +61,7 @@ export default class ENSLoginSDK
 			const uri        = parsed[4];
 
 			console.log(protocol, uri, entrypoint)
-			
+
 			var loader = null;
 			switch (protocol)
 			{
@@ -87,7 +87,7 @@ export default class ENSLoginSDK
 			.then(({ addr, descr }) => {
 				if (config.__callbacks && config.__callbacks.resolved)
 				{
-					config.__callbacks.resolved();
+					config.__callbacks.resolved({ username, addr, descr });
 				}
 				ENSLoginSDK._loadProvider(descr, { ...config, user: { username, addr, descr }})
 				.then(resolve)

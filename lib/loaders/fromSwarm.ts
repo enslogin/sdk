@@ -17,7 +17,7 @@ export function fromSwarm(protocol: string, fileHash: string, config: types.conf
 			// TODO handle dirs
 			if (config.__callbacks && config.__callbacks.loaded)
 			{
-				config.__callbacks.loaded(fileHash); // name ?
+				config.__callbacks.loaded({ uri: `${protocole}://${path}` });
 			}
 			vm.runInThisContext(
 				swarm.toString(data),
