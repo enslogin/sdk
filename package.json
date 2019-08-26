@@ -5,12 +5,13 @@
   "license": "MIT",
   "scripts": {
     "compile": "tsc",
-    "bundle":  "webpack",
-    "build":   "yarn compile && yarn bundle"
+    "bundle": "webpack",
+    "build": "yarn compile && yarn bundle"
   },
   "dependencies": {
     "ethers": "^4.0.33",
-    "ipfs-http-client": "^33.1.1"
+    "ipfs-http-client": "^33.1.1",
+    "swarm-js": "^0.1.39"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

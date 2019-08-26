@@ -112,7 +112,7 @@ var ENSLogin = /** @class */ (function () {
             ENSLogin.resolveUsername(username, config)
                 .then(function (_a) {
                 var addr = _a.addr, descr = _a.descr;
-                config.user = { addr: addr, username: username };
+                config.user = { username: username, addr: addr, descr: descr };
                 if (config.__callbacks && config.__callbacks.resolved) {
                     config.__callbacks.resolved();
                 }

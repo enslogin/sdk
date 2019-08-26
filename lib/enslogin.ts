@@ -57,7 +57,7 @@ export default class ENSLogin
 		return new Promise((resolve, reject) => {
 			ENSLogin.resolveUsername(username, config)
 			.then(({ addr, descr }) => {
-				config.user = { addr, username };
+				config.user = { username, addr, descr };
 
 				if (config.__callbacks && config.__callbacks.resolved) { config.__callbacks.resolved(); }
 
