@@ -118,10 +118,10 @@ var ENSLogin = /** @class */ (function () {
     ENSLogin._loadProvider = function (descr, config) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            var parsed = descr.match('([a-zA-Z0-9_]*)://([^:]*)(:(.*))?');
-            var protocol = parsed[1];
-            var uri = parsed[2];
-            var entrypoint = parsed[4] || 'provider';
+            var parsed = descr.match('(([a-zA-Z0-9_]*)@)?([a-zA-Z0-9_]*)://(.*)');
+            var entrypoint = parsed[2] || 'provider';
+            var protocol = parsed[3];
+            var uri = parsed[4];
             console.log(protocol, uri, entrypoint);
             var loader = null;
             switch (protocol) {

@@ -55,10 +55,10 @@ export default class ENSLogin
 	static _loadProvider(descr: string, config: types.config)
 	{
 		return new Promise((resolve, reject) => {
-			const parsed     = descr.match('([a-zA-Z0-9_]*)://([^:]*)(:(.*))?');
-			const protocol   = parsed[1];
-			const uri        = parsed[2];
-			const entrypoint = parsed[4] || 'provider';
+			const parsed     = descr.match('(([a-zA-Z0-9_]*)@)?([a-zA-Z0-9_]*)://(.*)');
+			const entrypoint = parsed[2] || 'provider';
+			const protocol   = parsed[3];
+			const uri        = parsed[4];
 
 			console.log(protocol, uri, entrypoint)
 
