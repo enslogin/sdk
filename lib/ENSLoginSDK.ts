@@ -70,7 +70,6 @@ export default class ENSLoginSDK
 					reject(`protocole ${protocol} is not supported`);
 					return;
 			}
-			console.log("with global[entrypoint]");
 			loader(protocol, uri, config)
 			.then(async () => resolve(await global[entrypoint](config)))
 			.catch(reject);
