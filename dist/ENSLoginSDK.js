@@ -139,12 +139,13 @@ var ENSLoginSDK = /** @class */ (function () {
                     reject("protocole " + protocol + " is not supported");
                     return;
             }
+            console.log("with global[entrypoint]");
             loader(protocol, uri, config)
                 .then(function () { return __awaiter(_this, void 0, void 0, function () { var _a; return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _a = resolve;
-                        return [4 /*yield*/, window[entrypoint](config)];
+                        return [4 /*yield*/, global[entrypoint](config)];
                     case 1: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
                 }
             }); }); })
