@@ -45,6 +45,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -54,7 +57,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ethers_1 = require("ethers");
-var loaders = __importStar(require("./loaders"));
+var loaders_1 = __importDefault(require("./loaders"));
 var ensutils = __importStar(require("./utils/ensutils"));
 var ENSLoginSDK = /** @class */ (function () {
     function ENSLoginSDK() {
@@ -120,35 +123,21 @@ var ENSLoginSDK = /** @class */ (function () {
             var entrypoint = parsed[2] || 'provider';
             var protocol = parsed[3];
             var uri = parsed[4];
-            var loader = null;
-            switch (protocol) {
-                case 'http':
-                    loader = loaders.fromHTTP;
-                    break;
-                case 'https':
-                    loader = loaders.fromHTTP;
-                    break;
-                case 'ipfs':
-                    loader = loaders.fromIPFS;
-                    break;
-                case 'swarm':
-                    loader = loaders.fromSwarm;
-                    break;
-                // case 'file':  loader = loaders.fromFS;    break;
-                default:
-                    reject("protocole " + protocol + " is not supported");
-                    return;
+            try {
+                loaders_1.default[protocol](protocol, uri, config)
+                    .then(function () { return __awaiter(_this, void 0, void 0, function () { var _a; return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            _a = resolve;
+                            return [4 /*yield*/, global[entrypoint](config)];
+                        case 1: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
+                    }
+                }); }); })
+                    .catch(reject);
             }
-            loader(protocol, uri, config)
-                .then(function () { return __awaiter(_this, void 0, void 0, function () { var _a; return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        _a = resolve;
-                        return [4 /*yield*/, global[entrypoint](config)];
-                    case 1: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
-                }
-            }); }); })
-                .catch(reject);
+            catch (e) {
+                reject("protocole " + protocol + " is not supported");
+            }
         });
     };
     ENSLoginSDK.connect = function (username, config) {

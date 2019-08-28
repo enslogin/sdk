@@ -1,9 +1,9 @@
-import swarm from 'swarm-js';
 import vm    from 'vm';
+import swarm from 'swarm-js';
 
 import * as types from '../types';
 
-export function fromSwarm(protocol: string, path: string, config: types.config = {})
+export function loader(protocol: string, path: string, config: types.config = {})
 {
 	return new Promise((resolve, reject) => {
 		if (config.__callbacks && config.__callbacks.loading)
@@ -19,12 +19,11 @@ export function fromSwarm(protocol: string, path: string, config: types.config =
 			{
 				config.__callbacks.loaded(protocol, path);
 			}
-			vm.runInThisContext(
-				swarm.toString(data),
-				{ filename: path }
-			);
+			vm.runInThisContext(swarm.toString(data), { filename: path });
 			resolve();
 		})
 		.catch(reject);
 	});
 }
+
+export default { "swarm": loader };

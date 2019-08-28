@@ -1,9 +1,9 @@
-import IPFS from 'ipfs-http-client';
 import vm   from 'vm';
+import IPFS from 'ipfs-http-client';
 
 import * as types from '../types';
 
-export function fromIPFS(protocol: string, path: string, config: types.config = {})
+export function loader(protocol: string, path: string, config: types.config = {})
 {
 	return new Promise((resolve, reject) => {
 		if (config.__callbacks && config.__callbacks.loading)
@@ -20,13 +20,12 @@ export function fromIPFS(protocol: string, path: string, config: types.config = 
 				{
 					config.__callbacks.loaded(protocol, path);
 				}
-				vm.runInThisContext(
-					file.content.toString(),
-					{ filename: file.name }
-				);
+				vm.runInThisContext(file.content.toString(), { filename: file.name });
 			});
 			resolve();
 		})
 		.catch(reject);
 	});
 }
+
+export default { "ipfs": loader };

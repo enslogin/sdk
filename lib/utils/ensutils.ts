@@ -1,20 +1,19 @@
-import { ethers }    from 'ethers';
-import ENS           from "../abi/ENS.json";
-import RESOLVER      from "../abi/Resolver.json";
-
+import { ethers } from 'ethers';
+import ENS        from "../abi/ENS.json";
+import RESOLVER   from "../abi/Resolver.json";
 import * as types from '../types';
 
-function labelhash(label: string): types.bytes32
+export function labelhash(label: string): types.bytes32
 {
 	return ethers.utils.solidityKeccak256([ "string" ], [ label.toLowerCase() ])
 }
 
-function compose(labelHash: types.bytes32, rootHash: types.bytes32): types.bytes32
+export function compose(labelHash: types.bytes32, rootHash: types.bytes32): types.bytes32
 {
 	return ethers.utils.solidityKeccak256([ "bytes32", "bytes32" ], [ rootHash,  labelHash ]);
 }
 
-function namehash(domain: string): types.bytes32
+export function namehash(domain: string): types.bytes32
 {
 	return domain.split('.').reverse().reduce(
 		(hash, label) => compose(labelhash(label), hash),
@@ -22,7 +21,7 @@ function namehash(domain: string): types.bytes32
 	);
 }
 
-function getENS(basicProvider: types.provider, config: types.config): Promise<types.contract>
+export function getENS(basicProvider: types.provider, config: types.config): Promise<types.contract>
 {
 	return new Promise(async (resolve, reject) => {
 		basicProvider.getNetwork().then(chain => {
@@ -33,7 +32,7 @@ function getENS(basicProvider: types.provider, config: types.config): Promise<ty
 	});
 }
 
-function getResolver(ens: types.contract, node: types.bytes32, config: types.config): Promise<types.contract>
+export function getResolver(ens: types.contract, node: types.bytes32, config: types.config): Promise<types.contract>
 {
 	return new Promise(async (resolve, reject) => {
 		ens.resolver(node).then(addr => {
@@ -49,11 +48,3 @@ function getResolver(ens: types.contract, node: types.bytes32, config: types.con
 		.catch(reject);
 	});
 }
-
-export {
-	labelhash,
-	compose,
-	namehash,
-	getENS,
-	getResolver,
-};

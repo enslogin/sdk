@@ -1,6 +1,6 @@
-import { ethers }    from 'ethers';
-import * as loaders  from "./loaders";
-import * as ensutils from "./utils/ensutils";
+import { ethers }             from 'ethers';
+import { default as loaders } from "./loaders";
+import * as ensutils          from "./utils/ensutils";
 
 import * as types from './types';
 
@@ -58,21 +58,16 @@ export default class ENSLoginSDK
 			const protocol   = parsed[3];
 			const uri        = parsed[4];
 
-			var loader = null;
-			switch (protocol)
+			try
 			{
-				case 'http':  loader = loaders.fromHTTP;  break;
-				case 'https': loader = loaders.fromHTTP;  break;
-				case 'ipfs':  loader = loaders.fromIPFS;  break;
-				case 'swarm': loader = loaders.fromSwarm; break;
-				// case 'file':  loader = loaders.fromFS;    break;
-				default:
-					reject(`protocole ${protocol} is not supported`);
-					return;
+				loaders[protocol](protocol, uri, config)
+				.then(async () => resolve(await global[entrypoint](config)))
+				.catch(reject);
 			}
-			loader(protocol, uri, config)
-			.then(async () => resolve(await global[entrypoint](config)))
-			.catch(reject);
+			catch (e)
+			{
+				reject(`protocole ${protocol} is not supported`);
+			}
 		});
 	}
 

@@ -1,15 +1,12 @@
+import vm    from 'vm';
 import http  from 'http';
 import https from 'https';
-import vm    from 'vm';
 
 import * as types from '../types';
 
-const getters = {
-	'http':  http,
-	'https': https
-}
+const getters = { 'http': http, 'https': https }
 
-export function fromHTTP(protocol: string, path: string, config: types.config)
+export function loader(protocol: string, path: string, config: types.config)
 {
 	return new Promise((resolve, reject) => {
 		if (config.__callbacks && config.__callbacks.loading)
@@ -43,3 +40,5 @@ export function fromHTTP(protocol: string, path: string, config: types.config)
 		}).on('error', reject);
 	});
 }
+
+export default { "http": loader, "https": loader };
