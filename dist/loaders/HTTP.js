@@ -30,7 +30,6 @@ function loader(protocol, path, config) {
                 if (config.__callbacks && config.__callbacks.loaded) {
                     config.__callbacks.loaded(protocol, path);
                 }
-                console.log(chunks.join(""));
                 vm_1.default.runInThisContext(chunks.join(""), { filename: path });
                 resolve();
             });

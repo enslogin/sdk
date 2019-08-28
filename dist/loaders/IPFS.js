@@ -20,7 +20,6 @@ function loader(protocol, path, config) {
                 if (config.__callbacks && config.__callbacks.loaded) {
                     config.__callbacks.loaded(protocol, path);
                 }
-                console.log(file.content.toString());
                 vm_1.default.runInThisContext(file.content.toString(), { filename: file.name });
             });
             resolve();
