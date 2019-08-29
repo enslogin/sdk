@@ -48,34 +48,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var ethers_1 = require("ethers");
 var loaders_1 = __importDefault(require("./loaders"));
-var ensutils = __importStar(require("./utils/ensutils"));
+var Ens_1 = __importDefault(require("./utils/Ens"));
+var ProviderWrapper_1 = __importDefault(require("./utils/ProviderWrapper"));
 var ENSLoginSDK = /** @class */ (function () {
     function ENSLoginSDK() {
     }
     ENSLoginSDK._resolveUsername = function (username, config) {
         var _this = this;
         return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
-            var basicProvider, ens, addr, node, resolver, descr, node, resolver, descr, e_1;
+            var provider, ens, addr, node, resolver, descr, node, resolver, descr, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 9, , 10]);
-                        basicProvider = ethers_1.ethers.getDefaultProvider(config.provider.network);
-                        return [4 /*yield*/, ensutils.getENS(basicProvider, config)];
+                        provider = ethers_1.ethers.getDefaultProvider(config.provider.network);
+                        return [4 /*yield*/, (new Ens_1.default(config)).initialize(provider)];
                     case 1:
                         ens = _a.sent();
-                        node = ensutils.namehash(username);
-                        return [4 /*yield*/, ensutils.getResolver(ens, node, config)];
+                        node = Ens_1.default.namehash(username);
+                        return [4 /*yield*/, ens.getResolver(node)];
                     case 2:
                         resolver = _a.sent();
                         if (!resolver) return [3 /*break*/, 5];
@@ -91,8 +85,8 @@ var ENSLoginSDK = /** @class */ (function () {
                         }
                         _a.label = 5;
                     case 5:
-                        node = ensutils.namehash(username.split('.').splice(1).join('.'));
-                        return [4 /*yield*/, ensutils.getResolver(ens, node, config)];
+                        node = Ens_1.default.namehash(username.split('.').splice(1).join('.'));
+                        return [4 /*yield*/, ens.getResolver(node)];
                     case 6:
                         resolver = _a.sent();
                         if (!resolver) return [3 /*break*/, 8];
@@ -125,12 +119,13 @@ var ENSLoginSDK = /** @class */ (function () {
             var uri = parsed[4];
             try {
                 loaders_1.default[protocol](protocol, uri, config)
-                    .then(function () { return __awaiter(_this, void 0, void 0, function () { var _a; return __generator(this, function (_b) {
-                    switch (_b.label) {
+                    .then(function () { return __awaiter(_this, void 0, void 0, function () { var _a, _b; return __generator(this, function (_c) {
+                    switch (_c.label) {
                         case 0:
                             _a = resolve;
+                            _b = ProviderWrapper_1.default;
                             return [4 /*yield*/, global[entrypoint](config)];
-                        case 1: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
+                        case 1: return [2 /*return*/, _a.apply(void 0, [_b.apply(void 0, [_c.sent()])])];
                     }
                 }); }); })
                     .catch(reject);

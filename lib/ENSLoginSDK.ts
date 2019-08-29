@@ -1,6 +1,7 @@
 import { ethers }             from 'ethers';
 import { default as loaders } from "./loaders";
-import * as ensutils          from "./utils/ensutils";
+import Ens                    from "./utils/Ens";
+import ProviderWrapper        from "./utils/ProviderWrapper";
 
 import * as types from './types';
 
@@ -11,12 +12,12 @@ export default class ENSLoginSDK
 		return new Promise(async (resolve, reject) => {
 			try
 			{
-				const basicProvider = ethers.getDefaultProvider(config.provider.network);
-				const ens           = await ensutils.getENS(basicProvider, config);
+				const provider = ethers.getDefaultProvider(config.provider.network);
+				const ens = await (new Ens(config)).initialize(provider);
 				var addr;
 				{
-					const node     = ensutils.namehash(username);
-					const resolver = await ensutils.getResolver(ens, node, config);
+					const node     = Ens.namehash(username);
+					const resolver = await ens.getResolver(node);
 					if (resolver)
 					{
 						addr  = await resolver.addr(node);
@@ -29,8 +30,8 @@ export default class ENSLoginSDK
 					}
 				}
 				{
-					const node     = ensutils.namehash(username.split('.').splice(1).join('.'));
-					const resolver = await ensutils.getResolver(ens, node, config);
+					const node     = Ens.namehash(username.split('.').splice(1).join('.'));
+					const resolver = await ens.getResolver(node);
 					if (resolver)
 					{
 						const descr = await resolver.text(node, 'web3-provider-default');
@@ -61,7 +62,7 @@ export default class ENSLoginSDK
 			try
 			{
 				loaders[protocol](protocol, uri, config)
-				.then(async () => resolve(await global[entrypoint](config)))
+				.then(async () => resolve(ProviderWrapper(await global[entrypoint](config))))
 				.catch(reject);
 			}
 			catch (e)
