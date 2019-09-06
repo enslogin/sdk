@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "babel-loader": "^8.0.6",
-    "tsc": "^1.20150623.0",
+    "typescript": "^3.6.2",
     "webpack": "^4.39.3"
   }
 }

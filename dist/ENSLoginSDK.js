@@ -11,10 +11,11 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -143,7 +144,7 @@ var ENSLoginSDK = /** @class */ (function () {
                 if (config.__callbacks && config.__callbacks.resolved) {
                     config.__callbacks.resolved(username, addr, descr);
                 }
-                ENSLoginSDK._loadProvider(descr, __assign({}, config, { user: { username: username, addr: addr, descr: descr } }))
+                ENSLoginSDK._loadProvider(descr, __assign(__assign({}, config), { user: { username: username, addr: addr, descr: descr } }))
                     .then(resolve)
                     .catch(reject);
             })

@@ -18,4 +18,4 @@ var HTTP_1 = __importDefault(require("./HTTP"));
 var IPFS_1 = __importDefault(require("./IPFS"));
 var SWARM_1 = __importDefault(require("./SWARM"));
 // import { default as FS    } from './FS';
-exports.default = __assign({}, HTTP_1.default, IPFS_1.default, SWARM_1.default);
+exports.default = __assign(__assign(__assign({}, HTTP_1.default), IPFS_1.default), SWARM_1.default);
