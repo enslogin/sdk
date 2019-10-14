@@ -62,7 +62,8 @@ export default class ENSLoginSDK
 			try
 			{
 				loaders[protocol](protocol, uri, config)
-				.then(async () => resolve(ProviderWrapper(await global[entrypoint](config))))
+				// .then(async () => resolve(ProviderWrapper(await global[entrypoint](config))))
+				.then(async () => resolve(await global[entrypoint](config)))
 				.catch(reject);
 			}
 			catch (e)

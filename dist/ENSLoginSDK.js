@@ -53,7 +53,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ethers_1 = require("ethers");
 var loaders_1 = __importDefault(require("./loaders"));
 var Ens_1 = __importDefault(require("./utils/Ens"));
-var ProviderWrapper_1 = __importDefault(require("./utils/ProviderWrapper"));
 var ENSLoginSDK = /** @class */ (function () {
     function ENSLoginSDK() {
     }
@@ -120,13 +119,13 @@ var ENSLoginSDK = /** @class */ (function () {
             var uri = parsed[4];
             try {
                 loaders_1.default[protocol](protocol, uri, config)
-                    .then(function () { return __awaiter(_this, void 0, void 0, function () { var _a, _b; return __generator(this, function (_c) {
-                    switch (_c.label) {
+                    // .then(async () => resolve(ProviderWrapper(await global[entrypoint](config))))
+                    .then(function () { return __awaiter(_this, void 0, void 0, function () { var _a; return __generator(this, function (_b) {
+                    switch (_b.label) {
                         case 0:
                             _a = resolve;
-                            _b = ProviderWrapper_1.default;
                             return [4 /*yield*/, global[entrypoint](config)];
-                        case 1: return [2 /*return*/, _a.apply(void 0, [_b.apply(void 0, [_c.sent()])])];
+                        case 1: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
                     }
                 }); }); })
                     .catch(reject);
