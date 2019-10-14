@@ -23,7 +23,6 @@ const config = {
 }
 
 ENSLoginSDK.connect(username, config).then((provider)=>{
-    console.log({username, provider})
     window.ethereum = provider
     window.web3 = new Web3(provider)
     provider.enable()  
