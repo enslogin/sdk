@@ -6,7 +6,7 @@ import * as types from '../types';
 
 const getters = { 'http': http, 'https': https }
 
-export function loader(protocol: string, path: string, config: types.config)
+export function loader(protocol: string, path: string, config: types.config = {})
 {
 	return new Promise((resolve, reject) => {
 		if (config.__callbacks && config.__callbacks.loading)

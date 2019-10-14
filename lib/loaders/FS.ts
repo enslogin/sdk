@@ -3,7 +3,7 @@ import fs from 'fs';
 
 import * as types from '../types';
 
-export function loader(protocol: string, path: string, config: types.config)
+export function loader(protocol: string, path: string, config: types.config = {})
 {
 	return new Promise((resolve, reject) => {
 		if (config.__callbacks && config.__callbacks.loading)

@@ -8,6 +8,7 @@ var http_1 = __importDefault(require("http"));
 var https_1 = __importDefault(require("https"));
 var getters = { 'http': http_1.default, 'https': https_1.default };
 function loader(protocol, path, config) {
+    if (config === void 0) { config = {}; }
     return new Promise(function (resolve, reject) {
         if (config.__callbacks && config.__callbacks.loading) {
             config.__callbacks.loading(protocol, path);

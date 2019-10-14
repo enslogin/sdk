@@ -10,7 +10,7 @@ export function loader(protocol: string, path: string, config: types.config = {}
 		{
 			config.__callbacks.loading(protocol, path);
 		}
-		IPFS(config.ipfs || { host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
+		IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https', ...config.ipfs })
 		.get(path)
 		.then(files => {
 			files

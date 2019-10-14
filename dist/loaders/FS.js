@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var vm_1 = __importDefault(require("vm"));
 var fs_1 = __importDefault(require("fs"));
 function loader(protocol, path, config) {
+    if (config === void 0) { config = {}; }
     return new Promise(function (resolve, reject) {
         if (config.__callbacks && config.__callbacks.loading) {
             config.__callbacks.loading(protocol, path);
