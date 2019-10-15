@@ -14,7 +14,10 @@ yarn add @enslogin/sdk
 import ENSLoginSDK from '@enslogin/sdk/dist/ENSLoginSDK'
 const config = {
 	provider:
-	{ network: 'goerli' },
+	{
+		network: 'goerli',
+		ens: '0x112234455c3a32fd11230c42e7bccd4a84e02010'
+	},
 	ipfs:{
 		host: 'ipfs.infura.io',
 		port: 5001,
@@ -47,12 +50,13 @@ You can get the labelhash of your node via this [pastebin](http://requirebin.com
 
 ## Config params
 
-### Provider (mandatory)
+### Provider
 
-- network
+- [mandatory] network: name or node address
+- [optional] ens: address of the ens root on that network (default provided by ethers.js for named networks)
 
-### IPFS (optional) 
+### IPFS
 
-- host (default = ipfs.infura.io)
-- port (default = 5001)
-- protocol (default = https)
+- [optional] host (default = ipfs.infura.io)
+- [optional] port (default = 5001)
+- [optional] protocol (default = https)
