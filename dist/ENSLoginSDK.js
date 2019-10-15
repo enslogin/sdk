@@ -53,6 +53,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ethers_1 = require("ethers");
 var loaders_1 = __importDefault(require("./loaders"));
 var Ens_1 = __importDefault(require("./utils/Ens"));
+var CODE_PATH = '/60/js'; // Using javascript on ethereum (slip-44: 60)
 var ENSLoginSDK = /** @class */ (function () {
     function ENSLoginSDK() {
     }
@@ -76,7 +77,7 @@ var ENSLoginSDK = /** @class */ (function () {
                         return [4 /*yield*/, resolver.addr(node)];
                     case 3:
                         addr = _a.sent();
-                        return [4 /*yield*/, resolver.text(node, 'web3-provider')];
+                        return [4 /*yield*/, resolver.text(node, 'enslogin')];
                     case 4:
                         descr = _a.sent();
                         if (descr) {
@@ -90,7 +91,7 @@ var ENSLoginSDK = /** @class */ (function () {
                     case 6:
                         resolver = _a.sent();
                         if (!resolver) return [3 /*break*/, 8];
-                        return [4 /*yield*/, resolver.text(node, 'web3-provider-default')];
+                        return [4 /*yield*/, resolver.text(node, 'enslogin-default')];
                     case 7:
                         descr = _a.sent();
                         if (descr) {
@@ -99,7 +100,7 @@ var ENSLoginSDK = /** @class */ (function () {
                         }
                         _a.label = 8;
                     case 8:
-                        reject("No web3 provider specified for this user");
+                        reject("ENSLogin is not available for this user");
                         return [3 /*break*/, 10];
                     case 9:
                         e_1 = _a.sent();
@@ -118,7 +119,7 @@ var ENSLoginSDK = /** @class */ (function () {
             var protocol = parsed[3];
             var uri = parsed[4];
             try {
-                loaders_1.default[protocol](protocol, uri, config)
+                loaders_1.default[protocol](protocol, uri + CODE_PATH, config)
                     // .then(async () => resolve(ProviderWrapper(await global[entrypoint](config))))
                     .then(function () { return __awaiter(_this, void 0, void 0, function () { var _a; return __generator(this, function (_b) {
                     switch (_b.label) {

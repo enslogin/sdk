@@ -16,6 +16,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var HTTP_1 = __importDefault(require("./HTTP"));
 var IPFS_1 = __importDefault(require("./IPFS"));
-var SWARM_1 = __importDefault(require("./SWARM"));
+// import { default as SWARM } from './SWARM';
 // import { default as FS    } from './FS';
-exports.default = __assign(__assign(__assign({}, HTTP_1.default), IPFS_1.default), SWARM_1.default);
+exports.default = __assign(__assign({}, HTTP_1.default), IPFS_1.default);
+/*
+ * TODO:
+ * check compatibility of swarm with recursive resolution (CODE_PATH)
+ */

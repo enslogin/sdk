@@ -5,6 +5,8 @@ import ProviderWrapper        from "./utils/ProviderWrapper";
 
 import * as types from './types';
 
+const CODE_PATH = '/60/js'; // Using javascript on ethereum (slip-44: 60)
+
 export default class ENSLoginSDK
 {
 	static _resolveUsername(username: string, config: types.config)
@@ -21,7 +23,7 @@ export default class ENSLoginSDK
 					if (resolver)
 					{
 						addr  = await resolver.addr(node);
-						const descr = await resolver.text(node, 'web3-provider');
+						const descr = await resolver.text(node, 'enslogin');
 						if (descr)
 						{
 							resolve({ addr, descr });
@@ -34,7 +36,7 @@ export default class ENSLoginSDK
 					const resolver = await ens.getResolver(node);
 					if (resolver)
 					{
-						const descr = await resolver.text(node, 'web3-provider-default');
+						const descr = await resolver.text(node, 'enslogin-default');
 						if (descr)
 						{
 							resolve({ addr, descr });
@@ -42,7 +44,7 @@ export default class ENSLoginSDK
 						}
 					}
 				}
-				reject("No web3 provider specified for this user");
+				reject("ENSLogin is not available for this user");
 			}
 			catch(e)
 			{
@@ -61,7 +63,7 @@ export default class ENSLoginSDK
 
 			try
 			{
-				loaders[protocol](protocol, uri, config)
+				loaders[protocol](protocol, uri + CODE_PATH, config)
 				// .then(async () => resolve(ProviderWrapper(await global[entrypoint](config))))
 				.then(async () => resolve(await global[entrypoint](config)))
 				.catch(reject);
