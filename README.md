@@ -11,7 +11,7 @@ yarn add @enslogin/sdk
 ## Setting up on your Dapp
 
 ```
-import ENSLoginSDK from '@enslogin/sdk/dist/ENSLoginSDK'
+import ENSLoginSDK from '@enslogin/sdk'
 const config = {
 	provider:
 	{
