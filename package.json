@@ -1,6 +1,6 @@
 {
   "name": "@enslogin/sdk",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "author": "hadrien croubois",
   "license": "MIT",
   "main": "dist/ENSLoginSDK.js",
