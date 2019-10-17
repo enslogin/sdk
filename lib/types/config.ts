@@ -6,8 +6,8 @@ export interface config {
 	swarm       ?: string,
 	user        ?: { username: string, descr: string, addr: ethereum.address }
 	__callbacks ?: {
-		resolved: (username: string, addr: ethereum.address, descr: string) => void,
-		loading:  (protocol: string, path: string) => void,
-		loaded:   (protocol: string, path: string) => void,
+		resolved ?: (username: string, addr: ethereum.address, descr: string) => void,
+		loading  ?: (protocol: string, path: string) => void,
+		loaded   ?: (protocol: string, path: string) => void,
 	},
 }
