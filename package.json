@@ -1,17 +1,17 @@
 {
   "name": "@enslogin/sdk",
   "version": "0.1.0",
-  "author": "hadrien croubois",
+  "author": "Hadrien Croubois <hc@iex.ec>",
   "license": "MIT",
-  "main": "dist/ENSLoginSDK.js",
+  "main": "dist/index.js",
   "files": [
     "/lib",
     "/dist"
   ],
   "scripts": {
-    "compile": "tsc",
-    "bundle": "webpack",
-    "build": "yarn compile && yarn bundle"
+    "prebuild": "yarn clean",
+    "build": "tsc",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "ethers": "^4.0.33",

@@ -153,4 +153,4 @@ var ENSLoginSDK = /** @class */ (function () {
     };
     return ENSLoginSDK;
 }());
-exports.default = ENSLoginSDK;
+exports.ENSLoginSDK = ENSLoginSDK;
