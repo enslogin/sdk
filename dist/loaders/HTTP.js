@@ -19,10 +19,11 @@ function loader(protocol, path, config = {}) {
                 reject(`Request Failed (status code ${statusCode})`);
                 return;
             }
-            else if (!/^application\/javascript/.test(contentType)) {
-                reject(`Invalid content-type (Expected application/json but received ${contentType})`);
-                return;
-            }
+            // else if (!/^application\/javascript/.test(contentType))
+            // {
+            // 	reject(`Invalid content-type (Expected application/json but received ${contentType})`);
+            // 	return;
+            // }
             var chunks = [];
             res.setEncoding('utf8');
             res.on('data', (chunk) => chunks.push(chunk));

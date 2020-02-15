@@ -72,7 +72,7 @@ class ENSLoginSDK {
     }
     static connect(username, config) {
         return new Promise((resolve, reject) => {
-            ENSLoginSDK._resolveUsername(username, config)
+            ENSLoginSDK._resolveUsername(username || "", config)
                 .then(({ addr, descr }) => {
                 if (config.__callbacks && config.__callbacks.resolved) {
                     config.__callbacks.resolved(username, addr, descr);
