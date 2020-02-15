@@ -3,49 +3,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var ethers_1 = require("ethers");
-var ENS_json_1 = __importDefault(require("../abi/ENS.json"));
-var Resolver_json_1 = __importDefault(require("../abi/Resolver.json"));
-var Ens = /** @class */ (function () {
-    function Ens(config) {
+const ethers_1 = require("ethers");
+const ENS_json_1 = __importDefault(require("../abi/ENS.json"));
+const Resolver_json_1 = __importDefault(require("../abi/Resolver.json"));
+class Ens {
+    constructor(config) {
         this.config = config;
     }
-    Ens.prototype.initialize = function (provider) {
-        var _this = this;
-        var that = this;
-        return new Promise(function (resolve, reject) {
+    initialize(provider) {
+        const that = this;
+        return new Promise((resolve, reject) => {
             provider
                 .getNetwork()
-                .then(function (chain) {
-                _this.registry = new ethers_1.ethers.Contract((_this.config.provider.ens || chain.ensAddress).toString(), ENS_json_1.default.abi, provider);
-                resolve(_this);
+                .then(chain => {
+                this.registry = new ethers_1.ethers.Contract((this.config.provider.ens || chain.ensAddress).toString(), ENS_json_1.default.abi, provider);
+                resolve(this);
             })
                 .catch(reject);
         });
-    };
-    Ens.prototype.getResolver = function (node) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.registry.resolver(node).then(function (addr) {
+    }
+    getResolver(node) {
+        return new Promise((resolve, reject) => {
+            this.registry.resolver(node).then(addr => {
                 if (addr === ethers_1.ethers.constants.AddressZero) {
                     resolve(null);
                 }
                 else {
-                    resolve(new ethers_1.ethers.Contract(addr, Resolver_json_1.default.abi, _this.registry.provider));
+                    resolve(new ethers_1.ethers.Contract(addr, Resolver_json_1.default.abi, this.registry.provider));
                 }
             })
                 .catch(reject);
         });
-    };
-    Ens.labelhash = function (label) {
+    }
+    static labelhash(label) {
         return ethers_1.ethers.utils.solidityKeccak256(["string"], [label.toLowerCase()]);
-    };
-    Ens.compose = function (labelHash, rootHash) {
+    }
+    static compose(labelHash, rootHash) {
         return ethers_1.ethers.utils.solidityKeccak256(["bytes32", "bytes32"], [rootHash, labelHash]);
-    };
-    Ens.namehash = function (domain) {
-        return domain.split('.').reverse().reduce(function (hash, label) { return Ens.compose(Ens.labelhash(label), hash); }, "0x0000000000000000000000000000000000000000000000000000000000000000");
-    };
-    return Ens;
-}());
+    }
+    static namehash(domain) {
+        return domain.split('.').reverse().reduce((hash, label) => Ens.compose(Ens.labelhash(label), hash), "0x0000000000000000000000000000000000000000000000000000000000000000");
+    }
+}
 exports.default = Ens;

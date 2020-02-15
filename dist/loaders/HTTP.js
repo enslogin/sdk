@@ -3,31 +3,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vm_1 = __importDefault(require("vm"));
-var http_1 = __importDefault(require("http"));
-var https_1 = __importDefault(require("https"));
-var getters = { 'http': http_1.default, 'https': https_1.default };
-function loader(protocol, path, config) {
-    if (config === void 0) { config = {}; }
-    return new Promise(function (resolve, reject) {
+const vm_1 = __importDefault(require("vm"));
+const http_1 = __importDefault(require("http"));
+const https_1 = __importDefault(require("https"));
+const getters = { 'http': http_1.default, 'https': https_1.default };
+function loader(protocol, path, config = {}) {
+    return new Promise((resolve, reject) => {
         if (config.__callbacks && config.__callbacks.loading) {
             config.__callbacks.loading(protocol, path);
         }
-        getters[protocol].get(protocol + "://" + path, function (res) {
-            var statusCode = res.statusCode;
-            var contentType = res.headers['content-type'];
+        getters[protocol].get(`${protocol}://${path}`, (res) => {
+            const { statusCode } = res;
+            const contentType = res.headers['content-type'];
             if (statusCode !== 200) {
-                reject("Request Failed (status code " + statusCode + ")");
+                reject(`Request Failed (status code ${statusCode})`);
                 return;
             }
             else if (!/^application\/javascript/.test(contentType)) {
-                reject("Invalid content-type (Expected application/json but received " + contentType + ")");
+                reject(`Invalid content-type (Expected application/json but received ${contentType})`);
                 return;
             }
             var chunks = [];
             res.setEncoding('utf8');
-            res.on('data', function (chunk) { return chunks.push(chunk); });
-            res.on('end', function () {
+            res.on('data', (chunk) => chunks.push(chunk));
+            res.on('end', () => {
                 if (config.__callbacks && config.__callbacks.loaded) {
                     config.__callbacks.loaded(protocol, path);
                 }
