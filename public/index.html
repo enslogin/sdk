@@ -16,7 +16,7 @@
 			const config = {
 				provider:
 				{
-					network: 'ropsten',
+					network: 'goerli',
 				},
 				ipfs:
 				{
@@ -36,7 +36,18 @@
 						console.log(`[CALLBACKS] loaded: ${protocol} ${path}`);
 					},
 				},
-			}
+			};
+
+			(async () => {
+
+
+				const provider = await ENSLoginSDK.default.connect("torus.enslogin.eth", config)
+				console.log(provider)
+				// const web3     = new Web3(provider)
+				// console.log(web3)
+				// console.log(await web3.eth.getAccounts())
+
+			})().catch(console.error)
 
 		</script>
 	</body>
