@@ -3,5 +3,5 @@ export interface ipfsFile {
     content: Uint8Array;
 }
 export interface ipfsApi {
-    get: (string: any) => Promise<ipfsFile[]>;
+    get: (ipfsHash: string) => Promise<ipfsFile[]>;
 }
