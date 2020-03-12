@@ -1,5 +1,5 @@
 import * as types from './types';
-export declare class ENSLoginSDK {
+export default class ENSLoginSDK {
     static _resolveUsername(username: string, config: types.config): Promise<{
         addr: string;
         descr: string;

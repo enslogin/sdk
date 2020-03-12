@@ -7,7 +7,7 @@ import * as types from './types';
 
 const CODE_PATH = '/60/js'; // Using javascript on ethereum (slip-44: 60)
 
-export class ENSLoginSDK
+export default class ENSLoginSDK
 {
 	static _resolveUsername(username: string, config: types.config): Promise<{ addr: string, descr: string }>
 	{

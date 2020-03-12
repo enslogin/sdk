@@ -85,4 +85,4 @@ class ENSLoginSDK {
         });
     }
 }
-exports.ENSLoginSDK = ENSLoginSDK;
+exports.default = ENSLoginSDK;

@@ -1,2 +1,4 @@
-import { ENSLoginSDK } from './ENSLoginSDK';
-export default ENSLoginSDK;
+import ENSLoginSDK from './ENSLoginSDK';
+import * as types from './types';
+
+export { ENSLoginSDK, types };
