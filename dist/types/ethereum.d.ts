@@ -7,4 +7,7 @@ export declare type arg = address | uint256 | bytes32 | bytes | args;
 export interface args extends Array<arg> {
 }
 export declare type contract = ethers.Contract;
-export declare type provider = ethers.providers.Provider;
+export interface provider extends ethers.providers.Provider {
+    enable?: () => Promise<void>;
+    disable?: () => Promise<void>;
+}

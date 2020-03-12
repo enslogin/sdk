@@ -61,7 +61,7 @@ class ENSLoginSDK {
             const uri = parsed[4];
             try {
                 loaders_1.default[protocol](protocol, uri + CODE_PATH, config)
-                    // .then(async () => resolve(ProviderWrapper(await global[entrypoint](config))))
+                    // .then(async () => resolve(ProviderWrapper(await global[entrypoint](config)) as unknown))
                     .then(() => __awaiter(this, void 0, void 0, function* () { return resolve(yield global[entrypoint](config)); }))
                     .catch(reject);
             }

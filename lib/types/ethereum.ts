@@ -8,5 +8,12 @@ export type bytes     = string | Uint8Array;
 export type arg       = address | uint256 | bytes32 | bytes | args;
 export interface args extends Array<arg> {};
 
+// Contract
 export type contract = ethers.Contract;
-export type provider = ethers.providers.Provider;
+
+// Provider
+export interface provider extends ethers.providers.Provider
+{
+	enable  ?: () => Promise<void>;
+	disable ?: () => Promise<void>;
+}

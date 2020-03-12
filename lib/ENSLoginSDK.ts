@@ -1,7 +1,7 @@
 import { ethers }             from 'ethers';
 import { default as loaders } from "./loaders";
 import Ens                    from "./utils/Ens";
-import ProviderWrapper        from "./utils/ProviderWrapper";
+// import ProviderWrapper        from "./utils/ProviderWrapper";
 
 import * as types from './types';
 
@@ -9,7 +9,7 @@ const CODE_PATH = '/60/js'; // Using javascript on ethereum (slip-44: 60)
 
 export class ENSLoginSDK
 {
-	static _resolveUsername(username: string, config: types.config)
+	static _resolveUsername(username: string, config: types.config): Promise<{ addr: string, descr: string }>
 	{
 		return new Promise(async (resolve, reject) => {
 			try
@@ -53,9 +53,9 @@ export class ENSLoginSDK
 		});
 	}
 
-	static _loadProvider(descr: string, config: types.config)
+	static _loadProvider(descr: string, config: types.config): Promise<types.provider>
 	{
-		return new Promise((resolve, reject) => {
+		return new Promise<types.provider>((resolve, reject) => {
 			const parsed     = descr.match('(([a-zA-Z0-9_]*)@)?([a-zA-Z0-9_]*)://(.*)');
 			const entrypoint = parsed[2] || 'provider';
 			const protocol   = parsed[3];
@@ -64,8 +64,8 @@ export class ENSLoginSDK
 			try
 			{
 				loaders[protocol](protocol, uri + CODE_PATH, config)
-				// .then(async () => resolve(ProviderWrapper(await global[entrypoint](config))))
-				.then(async () => resolve(await global[entrypoint](config)))
+				// .then(async () => resolve(ProviderWrapper(await global[entrypoint](config)) as unknown))
+				.then(async () => resolve(await global[entrypoint](config)) as unknown)
 				.catch(reject);
 			}
 			catch (e)
@@ -75,9 +75,9 @@ export class ENSLoginSDK
 		});
 	}
 
-	static connect(username: string, config: types.config)
+	static connect(username: string, config: types.config): Promise<types.provider>
 	{
-		return new Promise((resolve, reject) => {
+		return new Promise<types.provider>((resolve, reject) => {
 			ENSLoginSDK._resolveUsername(username || "", config)
 			.then(({ addr, descr }) => {
 				if (config.__callbacks && config.__callbacks.resolved)
