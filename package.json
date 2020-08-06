@@ -1,6 +1,6 @@
 {
   "name": "@enslogin/sdk",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "author": "Hadrien Croubois <hc@iex.ec>",
   "license": "MIT",
   "main": "dist/index.js",
