@@ -19,6 +19,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.loader = void 0;
 const vm_1 = __importDefault(require("vm"));
 const ipfs_http_client_1 = __importDefault(require("ipfs-http-client"));
 const BufferList_1 = __importDefault(require("bl/BufferList"));
@@ -36,7 +37,7 @@ function loader(protocol, path, config = {}) {
                 }
                 const content = new BufferList_1.default();
                 try {
-                    for (var _e = __asyncValues(file.content), _f; _f = yield _e.next(), !_f.done;) {
+                    for (var _e = (e_2 = void 0, __asyncValues(file.content)), _f; _f = yield _e.next(), !_f.done;) {
                         const chunk = _f.value;
                         content.append(chunk);
                     }

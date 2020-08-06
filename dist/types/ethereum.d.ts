@@ -1,8 +1,10 @@
 import { ethers } from 'ethers';
-export declare type uint256 = string | number | ethers.utils.BigNumber;
-export declare type address = string | Uint8Array;
-export declare type bytes32 = string | Uint8Array;
-export declare type bytes = string | Uint8Array;
+import { BigNumberish } from "@ethersproject/bignumber";
+import { BytesLike } from "@ethersproject/bytes";
+export declare type uint256 = BigNumberish;
+export declare type address = BytesLike;
+export declare type bytes32 = BytesLike;
+export declare type bytes = BytesLike;
 export declare type arg = address | uint256 | bytes32 | bytes | args;
 export interface args extends Array<arg> {
 }

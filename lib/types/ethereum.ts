@@ -1,10 +1,12 @@
 import { ethers } from 'ethers';
+import { BigNumberish } from "@ethersproject/bignumber";
+import { BytesLike    } from "@ethersproject/bytes";
 
 // Solidity
-export type uint256   = string | number | ethers.utils.BigNumber;
-export type address   = string | Uint8Array;
-export type bytes32   = string | Uint8Array;
-export type bytes     = string | Uint8Array;
+export type uint256   = BigNumberish;
+export type address   = BytesLike;
+export type bytes32   = BytesLike;
+export type bytes     = BytesLike;
 export type arg       = address | uint256 | bytes32 | bytes | args;
 export interface args extends Array<arg> {};
 

@@ -14,14 +14,15 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "ethers": "^4.0.44",
-    "ipfs-http-client": "^42.0.0",
-    "swarm-js": "^0.1.39"
+    "ethers": "^5.0.8",
+    "ipfs-http-client": "^45.0.0",
+    "swarm-js": "^0.1.40"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.11.1",
+    "@types/node": "^14.0.27",
+    "babel-loader": "^8.1.0",
     "rimraf": "^3.0.2",
-    "typescript": "^3.7.5"
+    "typescript": "^3.9.7"
   }
 }

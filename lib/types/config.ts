@@ -1,7 +1,7 @@
 import * as ethereum from './ethereum';
 
 export interface config {
-	provider    ?: { network?: string, ens?: ethereum.address },
+	provider    ?: { network?: string, resolutionNetwork?: string, ens?: ethereum.address },
 	ipfs        ?: { host?: string, port?: number, protocol?: string },
 	swarm       ?: string,
 	user        ?: { username: string, descr: string, addr: ethereum.address }

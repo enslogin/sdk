@@ -14,7 +14,7 @@ export default class ENSLoginSDK
 		return new Promise(async (resolve, reject) => {
 			try
 			{
-				const provider = ethers.getDefaultProvider(config.provider.network);
+				const provider = ethers.getDefaultProvider(config.provider.resolutionNetwork || config.provider.network);
 				const ens = await (new Ens(config)).initialize(provider);
 				var addr;
 				{

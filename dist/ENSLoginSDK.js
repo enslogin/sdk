@@ -20,7 +20,7 @@ class ENSLoginSDK {
     static _resolveUsername(username, config) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const provider = ethers_1.ethers.getDefaultProvider(config.provider.network);
+                const provider = ethers_1.ethers.getDefaultProvider(config.provider.resolutionNetwork || config.provider.network);
                 const ens = yield (new Ens_1.default(config)).initialize(provider);
                 var addr;
                 {

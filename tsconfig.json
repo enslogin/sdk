@@ -4,6 +4,7 @@
 		"module": "commonjs",
 		"target": "es6",
 		"outDir": "dist",
+		"types": [ "node" ],
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
 		"declaration": true,

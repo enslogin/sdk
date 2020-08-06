@@ -2,6 +2,7 @@ import * as ethereum from './ethereum';
 export interface config {
     provider?: {
         network?: string;
+        resolutionNetwork?: string;
         ens?: ethereum.address;
     };
     ipfs?: {
